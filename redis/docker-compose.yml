@@ -1,0 +1,34 @@
+version: '3'
+services: 
+  redis:
+    image: redis:${REDIS_TAG:-latest}
+    container_name: redis
+    restart: always
+    # 自定义密码时使用
+    # command: redis-server --requirepass ${yourpassword}
+    # 自定义配置文件时使用
+    # command: redis-server /usr/local/etc/redis/redis.conf
+    volumes: 
+      - "${REDIS_DATA_VOLUME:-./data}:/data:rw"
+      # 自定义配置文件时使用
+      # - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports: 
+      - 6379:6379
+    networks: 
+      - "docker-bridge"
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: redisinsight
+    restart: always
+    depends_on: 
+      - redis
+    ports:
+      - 8001:8001
+    networks:
+      - "docker-bridge"
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true
