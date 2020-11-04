@@ -1,0 +1,40 @@
+version: '3.1'
+services: 
+  mysql:
+    image: mysql:${MYSQL_VERSION:-latest}
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ${MYSQL_DATA_VOLUME:-./data}:/var/lib/mysql:rw
+      # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉
+      - ${MYSQL_FILES_VOLUME:-./mysql-files}:/var/lib/mysql-files:rw
+    ports:
+      - 3306:3306
+    networks: 
+      - docker-bridge
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - docker-bridge
+
+  soar-web:
+    image: becivells/soar-web
+    container_name: soar-web
+    restart: always
+    ports:
+      - 5077:5077
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true

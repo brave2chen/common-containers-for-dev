@@ -1,0 +1,19 @@
+version: '3.1'
+services: 
+  fluentd:
+    image: fluentd:${FLUENTD_VERSION:-latest}
+    container_name: fluentd
+    restart: always
+    volumes:
+      - ${FLUENTD_LOG_VOLUME:-./log}:/fluentd/log:rw
+      - ${FLUENTD_CONF_VOLUME:-./etc}:/fluentd/etc:rw
+    ports:
+      - 24224:24224
+      - 24224:24224/udp
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true

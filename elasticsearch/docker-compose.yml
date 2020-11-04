@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  elasticsearch:
+    image: elasticsearch:${ES_VERSION:-latest}
+    container_name: elasticsearch
+    restart: always
+    environment:
+      - "cluster.name=elasticsearch"        #设置集群名称为elasticsearch
+      - "discovery.type=single-node"        #以单一节点模式启动
+      - "ES_JAVA_OPTS=${ES_JAVA_OPTS:--Xms512m -Xmx512m}"
+      - "TZ=${ES_TZ:-Asia/Shanghai}"
+    volumes:
+      - ${ES_DATA_VOLUME:-./data}:/etc/elasticsearch:rw
+      - ${ES_PLUGINS_VOLUME:-./plugins}:/usr/share/elasticsearch/plugins:rw
+    ports:
+      - 9300:9300
+      - 9200:9200
+    networks:
+      - docker-bridge
+
+  kibana:
+    image: kibana:${ES_VERSION:-latest}
+    container_name: kibana
+    restart: always
+    environment:
+      - "I18N_LOCALE=zh-CN"
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+  docker-bridge:
+    external: true
