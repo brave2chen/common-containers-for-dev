@@ -13,12 +13,12 @@ export REDIS_VERSION=6.0.9
 export REDIS_DATA_VOLUME=c:/dockerMount/redis/data
 cd redis && docker-compose up -d && cd ..
 
-# 创建 elasticsearch (包含了kibana工具)
+# 创建 elasticsearch (包含了kibana工具)，安装ik中文分词
 export ES_VERSION=7.9.3
 export ES_DATA_VOLUME=c:/dockerMount/elasticsearch/data
 export ES_PLUGINS_VOLUME=c:/dockerMount/elasticsearch/plugins
 cd elasticsearch
-# 先下载分词插件，复制到插件挂载目录下，github网络及慢，容易出问题，该步骤建议手工下载，解压并放置到$ES_PLUGINS_VOLUME目录下，然后注释以下两行代码即可
+# FIXME 先下载分词插件，复制到插件挂载目录下，github网络及慢，容易出问题，该步骤建议手工下载，解压并放置到$ES_PLUGINS_VOLUME目录下，然后注释以下两行代码即可
 #curl "https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v${ES_VERSION}/elasticsearch-analysis-ik-${ES_VERSION}.zip" -L -o ik.zip
 #mkdir "${ES_PLUGINS_VOLUME}/ik/" && unzip -o ik.zip -d "${ES_PLUGINS_VOLUME}/ik/" && rm ik.zip
 docker-compose up -d && cd ..
@@ -27,7 +27,17 @@ docker-compose up -d && cd ..
 export FLUENTD_VERSION=v1.9.1-debian-1.0
 export FLUENTD_LOG_VOLUME=c:/dockerMount/fluentd/log
 export FLUENTD_CONF_VOLUME=c:/dockerMount/fluentd/etc
-# 复制镜像的配置文件到 $FLUENTD_CONF_VOLUME 目录下，该步骤建议手工执行，并注释掉下一行语句，否则多次原因改脚本，会覆盖原先的配置
-docker run -it --rm --name fluentd_temp -v "${FLUENTD_CONF_VOLUME}:/fluentd/log/" "fluentd:${FLUENTD_VERSION}" bash -c "cp -r /fluentd/etc/* /fluentd/log&&exit"
+# FIXME 复制镜像的配置文件到 $FLUENTD_CONF_VOLUME 目录下，该步骤建议手工执行，并注释掉下一行语句，否则多次原因改脚本，会覆盖原先的配置
+# docker run -it --rm --name fluentd_temp -v "${FLUENTD_CONF_VOLUME}:/fluentd/log/" "fluentd:${FLUENTD_VERSION}" bash -c "cp -r /fluentd/etc/* /fluentd/log&&exit"
 cd fluentd && docker-compose up -d && cd ..
 
+# 创建 influxdb
+export INFLUXDB_VERSION=1.7.10
+export INFLUXDB_DATA_VOLUME=c:/dockerMount/influxdb
+export INFLUXDB_DB=db0
+export INFLUXDB_ADMIN_USER=admin
+export INFLUXDB_ADMIN_PASSWORD=admin
+export INFLUXDB_GRAPHITE_ENABLED=true
+export INFLUXDB_USER=user
+export INFLUXDB_USER_PASSWORD=user
+cd influxdb && docker-compose up -d && cd ..
