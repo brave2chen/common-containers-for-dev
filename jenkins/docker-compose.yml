@@ -1,0 +1,18 @@
+version: '3.1'
+services: 
+  jenkins:
+    image: jenkins:${JENKINS_VERSION:-latest}
+    container_name: jenkins
+    restart: always
+    volumes:
+      - ${JENKINS_HOME_VOLUME:-./jenkins_home}:/var/jenkins_home:rw
+    ports:
+      - ${JENKINS_PORT:-8080}:8080
+      - 50000:50000
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true

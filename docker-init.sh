@@ -41,3 +41,8 @@ export INFLUXDB_GRAPHITE_ENABLED=true
 export INFLUXDB_USER=user
 export INFLUXDB_USER_PASSWORD=user
 cd influxdb && docker-compose up -d && cd ..
+
+# 创建 jenkins
+export JENKINS_PORT=8888
+export JENKINS_HOME_VOLUME=c:/dockerMount/jenkins/jenkins_home
+cd jenkins && docker-compose up -d && cd ..
