@@ -43,6 +43,8 @@ export INFLUXDB_USER_PASSWORD=user
 cd influxdb && docker-compose up -d && cd ..
 
 # 创建 jenkins
+export JENKINS_VERSION=2.249.3-lts-centos7
 export JENKINS_PORT=8888
+# 整个 jenkins 挂载处理，方便修改
 export JENKINS_HOME_VOLUME=c:/dockerMount/jenkins/jenkins_home
 cd jenkins && docker-compose up -d && cd ..

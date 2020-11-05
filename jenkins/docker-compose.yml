@@ -1,7 +1,7 @@
 version: '3.1'
 services: 
   jenkins:
-    image: jenkins:${JENKINS_VERSION:-latest}
+    image: jenkins/jenkins:${JENKINS_VERSION:-latest}
     container_name: jenkins
     restart: always
     volumes:
