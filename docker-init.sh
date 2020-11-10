@@ -48,3 +48,13 @@ export JENKINS_PORT=8888
 # 整个 jenkins 挂载出来，方便修改
 export JENKINS_HOME_VOLUME=c:/dockerMount/jenkins/jenkins_home
 cd jenkins && docker-compose up -d && cd ..
+
+# 创建 pulsar
+export PULSAR_VERSION=2.5.2
+export PULSAR_DATA_VOLUME=c:/dockerMount/pulsar/data
+export PULSAR_CONF_VOLUME=c:/dockerMount/pulsar/conf
+export PULSAR_PORT=6650
+export PULSAR_HTTP_PORT=8850
+# FIXME 复制镜像的配置文件到 $FLUENTD_CONF_VOLUME 目录下，该步骤建议手工执行，并注释掉下一行语句，否则多次原因改脚本，会覆盖原先的配置
+# docker run -it --rm --name pulsar_temp -v "${PULSAR_CONF_VOLUME}:/pulsar/data" "apachepulsar/pulsar:${PULSAR_VERSION}" bash -c "cp -r /pulsar/conf/* /pulsar/data&&exit"
+cd pulsar && docker-compose up -d && cd ..

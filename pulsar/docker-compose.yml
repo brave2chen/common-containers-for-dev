@@ -1,0 +1,20 @@
+version: '3.1'
+services: 
+  pulsar:
+    image: apachepulsar/pulsar:${PULSAR_VERSION:-latest}
+    container_name: pulsar
+    command: bin/pulsar standalone
+    restart: always
+    volumes:
+      - ${PULSAR_DATA_VOLUME:-./data}:/pulsar/data:rw
+      - ${PULSAR_CONF_VOLUME:-./conf }:/pulsar/conf:rw
+    ports:
+      - ${PULSAR_HTTP_PORT:-8080}:8080
+      - ${PULSAR_PORT:-6650}:6650
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true
