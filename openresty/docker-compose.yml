@@ -1,0 +1,17 @@
+version: '3.1'
+services: 
+  openresty:
+    image: openresty/openresty:${OPENRESTY_VERSION:-latest}
+    container_name: openresty
+    restart: always
+    volumes:
+      - ${OPENRESTY_NGINX_CONF_VOLUME:-./conf }:/etc/nginx/conf.d/:rw
+    ports:
+      - ${OPENRESTY_NGINX_PORT:-80}:80
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true

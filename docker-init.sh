@@ -58,3 +58,10 @@ export PULSAR_HTTP_PORT=8850
 # FIXME 复制镜像的配置文件到 $FLUENTD_CONF_VOLUME 目录下，该步骤建议手工执行，并注释掉下一行语句，否则多次原因改脚本，会覆盖原先的配置
 # docker run -it --rm --name pulsar_temp -v "${PULSAR_CONF_VOLUME}:/pulsar/data" "apachepulsar/pulsar:${PULSAR_VERSION}" bash -c "cp -r /pulsar/conf/* /pulsar/data&&exit"
 cd pulsar && docker-compose up -d && cd ..
+
+# 创建 openresty
+export OPENRESTY_VERSION=1.15.8.1-alpine-fat
+export OPENRESTY_NGINX_CONF_VOLUME=c:/dockerMount/openresty/conf
+export OPENRESTY_NGINX_PORT=80
+#docker run -it --rm --name openresty_temp -v "${OPENRESTY_NGINX_CONF_VOLUME}:/etc/nginx/conf/" "openresty/openresty:${OPENRESTY_VERSION}" bash -c "cp -r /etc/nginx/conf.d/* /etc/nginx/conf/&&exit"
+cd openresty && docker-compose up -d && cd ..
