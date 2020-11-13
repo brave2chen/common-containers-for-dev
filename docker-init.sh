@@ -62,6 +62,7 @@ cd pulsar && docker-compose up -d && cd ..
 # 创建 openresty
 export OPENRESTY_VERSION=1.15.8.1-alpine-fat
 export OPENRESTY_NGINX_CONF_VOLUME=c:/dockerMount/openresty/conf
+export OPENRESTY_LUA_VOLUME=c:/dockerMount/openresty/lua
 export OPENRESTY_NGINX_PORT=80
 #docker run -it --rm --name openresty_temp -v "${OPENRESTY_NGINX_CONF_VOLUME}:/etc/nginx/conf/" "openresty/openresty:${OPENRESTY_VERSION}" bash -c "cp -r /etc/nginx/conf.d/* /etc/nginx/conf/&&exit"
 cd openresty && docker-compose up -d && cd ..

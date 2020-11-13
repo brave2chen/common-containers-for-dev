@@ -6,6 +6,7 @@ services:
     restart: always
     volumes:
       - ${OPENRESTY_NGINX_CONF_VOLUME:-./conf }:/etc/nginx/conf.d/:rw
+      - ${OPENRESTY_LUA_VOLUME:-./lua }:/app/lua/:rw
     ports:
       - ${OPENRESTY_NGINX_PORT:-80}:80
     networks:
