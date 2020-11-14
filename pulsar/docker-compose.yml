@@ -5,6 +5,8 @@ services:
     container_name: pulsar
     command: bin/pulsar standalone
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - ${PULSAR_DATA_VOLUME:-./data}:/pulsar/data:rw
       - ${PULSAR_CONF_VOLUME:-./conf }:/pulsar/conf:rw

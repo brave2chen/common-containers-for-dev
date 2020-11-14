@@ -4,6 +4,8 @@ services:
     image: jenkins/jenkins:${JENKINS_VERSION:-latest}
     container_name: jenkins
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - ${JENKINS_HOME_VOLUME:-./jenkins_home}:/var/jenkins_home:rw
     ports:

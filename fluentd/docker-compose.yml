@@ -4,6 +4,8 @@ services:
     image: fluentd:${FLUENTD_VERSION:-latest}
     container_name: fluentd
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - ${FLUENTD_LOG_VOLUME:-./log}:/fluentd/log:rw
       - ${FLUENTD_CONF_VOLUME:-./etc}:/fluentd/etc:rw

@@ -8,6 +8,8 @@ services:
     # command: redis-server --requirepass ${yourpassword}
     # 自定义配置文件时使用
     # command: redis-server /usr/local/etc/redis/redis.conf
+    environment:
+      - TZ=Asia/Shanghai
     volumes: 
       - ${REDIS_DATA_VOLUME:-./data}:/data:rw
       # 自定义配置文件时使用

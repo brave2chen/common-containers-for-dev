@@ -4,6 +4,8 @@ services:
     image: openresty/openresty:${OPENRESTY_VERSION:-latest}
     container_name: openresty
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     volumes:
       - ${OPENRESTY_NGINX_CONF_VOLUME:-./conf}:/etc/nginx/conf.d/:rw
       - ${OPENRESTY_LUA_VOLUME:-./lua}:/app/lua/:rw
