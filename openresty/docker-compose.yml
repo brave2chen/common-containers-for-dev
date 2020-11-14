@@ -4,9 +4,6 @@ services:
     image: openresty/openresty:${OPENRESTY_VERSION:-latest}
     container_name: openresty
     restart: always
-#    environment:
-#      AC_1_ADDRESS: http://121.40.136.187:7700/
-#      MAC_1_ADDRESS: http://test-mx-cnca.midea.com/
     volumes:
       - ${OPENRESTY_NGINX_CONF_FILE:-./nginx.conf/}:/usr/local/openresty/nginx/conf/nginx.conf:rw
       - ${OPENRESTY_NGINX_CONF_VOLUME:-./conf}:/etc/nginx/conf.d/:rw
