@@ -5,7 +5,6 @@ services:
     container_name: openresty
     restart: always
     volumes:
-      - ${OPENRESTY_NGINX_CONF_FILE:-./nginx.conf/}:/usr/local/openresty/nginx/conf/nginx.conf:rw
       - ${OPENRESTY_NGINX_CONF_VOLUME:-./conf}:/etc/nginx/conf.d/:rw
       - ${OPENRESTY_LUA_VOLUME:-./lua}:/app/lua/:rw
     ports:

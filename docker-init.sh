@@ -61,7 +61,6 @@ cd pulsar && docker-compose up -d && cd ..
 
 # 创建 openresty
 export OPENRESTY_VERSION=1.15.8.3-centos
-export OPENRESTY_NGINX_CONF_FILE=c:/dockerMount/openresty/nginx.conf
 export OPENRESTY_NGINX_CONF_VOLUME=c:/dockerMount/openresty/conf
 export OPENRESTY_LUA_VOLUME=c:/dockerMount/openresty/lua
 export OPENRESTY_NGINX_PORT=80
