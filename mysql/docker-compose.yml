@@ -20,6 +20,8 @@ services:
   adminer:
     image: adminer
     container_name: adminer
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - 8080:8080
     networks:
@@ -29,6 +31,8 @@ services:
     image: becivells/soar-web
     container_name: soar-web
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - 5077:5077
     networks:

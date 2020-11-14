@@ -23,6 +23,8 @@ services:
     image: redislabs/redisinsight
     container_name: redisinsight
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - 8001:8001
     networks:
