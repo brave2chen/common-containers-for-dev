@@ -1,0 +1,24 @@
+version: '3.1'
+services:
+  nfs-server:
+    image: gists/nfs-server:${NFS_SERVER_VERSION:-latest}
+    container_name: nfs-server
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - NFS_DOMAIN=*
+    # https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities
+    cap_add:
+      - SYS_ADMIN
+      - SETPCAP
+    volumes:
+      - ${NFS_SERVER_SHARE_VOLUME:-./share}:/nfs-share
+    ports:
+      - ${NFS_SERVER_PORT:-2049}:2049
+    networks: 
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true

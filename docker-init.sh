@@ -66,3 +66,10 @@ export OPENRESTY_LUA_VOLUME=c:/dockerMount/openresty/lua
 export OPENRESTY_NGINX_PORT=80
 #docker run -it --rm --name openresty_temp -v "${OPENRESTY_NGINX_CONF_VOLUME}:/etc/nginx/conf/" "openresty/openresty:${OPENRESTY_VERSION}" bash -c "cp -r /etc/nginx/conf.d/* /etc/nginx/conf/&&exit"
 cd openresty && docker-compose up -d && cd ..
+
+# 创建NFS SERVER
+export NFS_SERVER_VERSION=2.4.3
+export NFS_SERVER_SHARE_VOLUME=c:/dockerMount/nfs-server/share
+export NFS_SERVER_PORT=2049
+# mount命令 mount -v -t nfs -o vers=4,port=2049 nfs-server:/ /mount-path
+cd nfs-server && docker-compose up -d && cd ..
