@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kl-test        # pv 名字
+  namespace: default
+  labels:
+    app: kl-test       # 定义 labels ap: kl-test
+spec:
+  capacity:
+    storage: 10Mi      # 定义容量
+  accessModes:
+    - ReadWriteMany    # 访问模式
+  persistentVolumeReclaimPolicy: Retain # 回收策略
+  storageClassName: nfs                 # 定义 storageClassName 只有相同名字的才能绑定在一起
+  nfs:
+    path: /html
+    server: 10.33.195.46
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: kl-test      # pvc 名字
+  namespace: default
+spec:
+  storageClassName: nfs  # Name of Storage Class Name, use same class name defined in pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Mi     # amout of Storage request
+  selector:
+    matchLabels:
+      app: kl-test      # 指定 pv 的标签 kl-test
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nfs-pvc
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-pvc
+  template:
+    metadata:
+      labels:
+        app: nfs-pvc
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.7.9
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: kl-test
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: kl-test
+          persistentVolumeClaim:
+            claimName: kl-test
