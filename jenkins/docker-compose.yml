@@ -10,7 +10,7 @@ services:
       - ${JENKINS_HOME_VOLUME:-./jenkins_home}:/var/jenkins_home:rw
     ports:
       - ${JENKINS_PORT:-8080}:8080
-      - 50000:50000
+      - ${JENKINS_JNLP_PORT:-50000}:50000
     networks:
       - docker-bridge
 

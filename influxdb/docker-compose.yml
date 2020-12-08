@@ -15,8 +15,8 @@ services:
     volumes:
       - ${INFLUXDB_DATA_VOLUME:-./log}:/var/lib/influxdb:rw
     ports:
-      - 8086:8086
-      - 2003:2003
+      - ${INFLUXDB_HTTP_PORT:-8086}:8086
+      - ${INFLUXDB_GRAPHITE_PORT:-2003}:2003
     networks:
       - docker-bridge
 

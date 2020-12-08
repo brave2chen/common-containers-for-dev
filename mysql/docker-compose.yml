@@ -13,7 +13,7 @@ services:
       # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉
       - ${MYSQL_FILES_VOLUME:-./mysql-files}:/var/lib/mysql-files:rw
     ports:
-      - 3306:3306
+      - ${MYSQL_PORT:-3306}:3306
     networks: 
       - docker-bridge
 
@@ -23,7 +23,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - 8080:8080
+      - ${MYSQL_ADMINER_PORT:-8080}:8080
     networks:
       - docker-bridge
 
@@ -34,7 +34,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - 5077:5077
+      - ${MYSQL_SOAR_WEB_PORT:-5077}:5077
     networks:
       - docker-bridge
 

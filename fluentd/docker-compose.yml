@@ -10,8 +10,8 @@ services:
       - ${FLUENTD_LOG_VOLUME:-./log}:/fluentd/log:rw
       - ${FLUENTD_CONF_VOLUME:-./etc}:/fluentd/etc:rw
     ports:
-      - 24224:24224
-      - 24224:24224/udp
+      - ${FLUENTD_PORT:-24224}:24224
+      - ${FLUENTD_PORT:-24224}:24224/udp
     networks:
       - docker-bridge
 

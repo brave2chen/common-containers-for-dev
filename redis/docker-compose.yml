@@ -13,9 +13,9 @@ services:
     volumes: 
       - ${REDIS_DATA_VOLUME:-./data}:/data:rw
       # 自定义配置文件时使用
-      # - ./redis.conf:/usr/local/etc/redis/redis.conf
+      # - ${REDIS_CONF_VOLUME:-./redis.conf}:/usr/local/etc/redis/redis.conf
     ports: 
-      - 6379:6379
+      - ${REDIS_PORT:-6379}:6379
     networks: 
       - docker-bridge
 
@@ -26,7 +26,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     ports:
-      - 8001:8001
+      - ${REDISINSIGHT_PORT:-8001}:8001
     networks:
       - docker-bridge
 

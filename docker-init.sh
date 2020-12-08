@@ -6,6 +6,7 @@ export MYSQL_VERSION=8.0.22
 export MYSQL_DATA_VOLUME=c:/dockerMount/mysql/data
 # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉，还需要注释docker-compose.yml的改配置
 export MYSQL_FILES_VOLUME=c:/dockerMount/mysql/mysql-files
+export MYSQL_ADMINER_PORT=8000
 cd mysql && docker-compose up -d && cd ..
 
 # 创建 redis (包含了redisinsight工具),
