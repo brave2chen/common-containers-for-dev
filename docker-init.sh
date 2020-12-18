@@ -6,7 +6,7 @@ export MYSQL_VERSION=8.0.22
 export MYSQL_DATA_VOLUME=c:/dockerMount/mysql/data
 # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉，还需要注释docker-compose.yml的改配置
 export MYSQL_FILES_VOLUME=c:/dockerMount/mysql/mysql-files
-export MYSQL_ADMINER_PORT=8000
+export MYSQL_ADMINER_PORT=8088
 cd mysql && docker-compose up -d && cd ..
 
 # 创建 redis (包含了redisinsight工具),
@@ -74,3 +74,7 @@ export NFS_SERVER_SHARE_VOLUME=c:/dockerMount/nfs-server/share
 export NFS_SERVER_PORT=2049
 # mount命令 mount -v -t nfs -o vers=4,port=2049 nfs-server:/ /mount-path
 cd nfs-server && docker-compose up -d && cd ..
+
+# 创建httpbin
+export HTTPBIN_PORT=8000
+cd httpbin && docker-compose up -d && cd ..

@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  nfs-server:
+    image: kennethreitz/httpbin
+    container_name: httpbin
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - ${HTTPBIN_PORT:-80}:80
+    networks: 
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true
