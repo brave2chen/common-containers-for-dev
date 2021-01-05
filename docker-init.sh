@@ -78,3 +78,9 @@ cd nfs-server && docker-compose up -d && cd ..
 # 创建httpbin
 export HTTPBIN_PORT=8000
 cd httpbin && docker-compose up -d && cd ..
+
+# 创建allure
+export ALLURE_DOCKER_SERVICE_PORT=5050
+export ALLURE_DOCKER_WEB_PORT=5252
+export ALLURE_DOCKER_SERVICE_PROJECTS_VOLUME=c:/dockerMount/allure/projects
+cd allure && docker-compose up -d && cd ..
