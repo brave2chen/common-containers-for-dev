@@ -3,7 +3,6 @@ services:
   nfs-server:
     image: gists/nfs-server:${NFS_SERVER_VERSION:-latest}
     container_name: nfs-server
-    restart: always
     environment:
       - TZ=Asia/Shanghai
       - NFS_DOMAIN=*
