@@ -86,3 +86,7 @@ export ALLURE_DOCKER_SERVICE_PORT=5050
 export ALLURE_DOCKER_WEB_PORT=5252
 export ALLURE_DOCKER_SERVICE_PROJECTS_VOLUME="${DOCKER_MOUNT_BASE_DIR}/allure/projects"
 cd allure && docker-compose up -d && cd ..
+
+# 创建 ubuntu ssh
+export UBUNTU_VERSION=18.04
+cd ubuntu && docker-compose up -d && cd ..

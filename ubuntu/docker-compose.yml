@@ -1,0 +1,17 @@
+version: '3.1'
+services: 
+  ubuntu:
+    image: rastasheep/ubuntu-sshd:${UBUNTU_VERSION:-latest}
+    container_name: ubuntu
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - ${UBUNTU_SSH_PORT:-22}:22
+    networks: 
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+ docker-bridge:
+  external: true
