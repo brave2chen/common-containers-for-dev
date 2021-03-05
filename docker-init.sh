@@ -1,5 +1,5 @@
 # 创建 docker bridge 网络
-DOCKER_MOUNT_BASE_DIR="c:/dockerMount"
+DOCKER_MOUNT_BASE_DIR="/c/dockerMount"
 
 docker network create docker-bridge
 
@@ -8,7 +8,7 @@ export MYSQL_VERSION=8.0.22
 export MYSQL_DATA_VOLUME="${DOCKER_MOUNT_BASE_DIR}/mysql/data"
 # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉，还需要注释docker-compose.yml的改配置
 export MYSQL_FILES_VOLUME="${DOCKER_MOUNT_BASE_DIR}/mysql/mysql-files"
-export MYSQL_ADMINER_PORT=8088
+export MYSQL_ADMINER_PORT=3380
 cd mysql && docker-compose up -d && cd ..
 
 # 创建 redis (包含了redisinsight工具),
@@ -66,7 +66,7 @@ cd pulsar && docker-compose up -d && cd ..
 export OPENRESTY_VERSION=1.15.8.3-centos
 export OPENRESTY_NGINX_CONF_VOLUME="${DOCKER_MOUNT_BASE_DIR}/openresty/conf"
 export OPENRESTY_LUA_VOLUME="${DOCKER_MOUNT_BASE_DIR}/openresty/lua"
-export OPENRESTY_NGINX_PORT=80
+export OPENRESTY_NGINX_PORT=8088
 #docker run -it --rm --name openresty_temp -v "${OPENRESTY_NGINX_CONF_VOLUME}:/etc/nginx/conf/" "openresty/openresty:${OPENRESTY_VERSION}" bash -c "cp -r /etc/nginx/conf.d/* /etc/nginx/conf/&&exit"
 cd openresty && docker-compose up -d && cd ..
 
