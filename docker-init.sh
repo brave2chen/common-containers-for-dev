@@ -92,3 +92,18 @@ export UBUNTU_VERSION=18.04
 export UBUNTU_SOURCES_VOLUME="${DOCKER_MOUNT_BASE_DIR}/ubuntu/sources.list"
 export UBUNTU_ROOT_VOLUME="${DOCKER_MOUNT_BASE_DIR}/ubuntu/root"
 cd ubuntu && docker-compose up -d && cd ..
+
+# 创建 prometheus、grafana
+export PROMETHEUS_DINGTAKL_CONFIG_FILE="${DOCKER_MOUNT_BASE_DIR}/prometheus/alertmanager/config.yml"
+export PROMETHEUS_ALERMANAGER_CONFIG_FILE="${DOCKER_MOUNT_BASE_DIR}/prometheus/alertmanager/alertmanager.yml"
+export PROMETHEUS_CONFIG_FILE="${DOCKER_MOUNT_BASE_DIR}/prometheus/prometheus/prometheus.yml"
+export PROMETHEUS_ALERT_RULES_FILE="${DOCKER_MOUNT_BASE_DIR}/prometheus/prometheus/alert-rules.yml"
+export PROMETHEUS_DATA_VOLUME="${DOCKER_MOUNT_BASE_DIR}/prometheus/prometheus/data"
+export PROMETHEUS_GRAFANA_VOLUME="${DOCKER_MOUNT_BASE_DIR}/prometheus/grafana"
+cd prometheus && docker-compose up -d && cd ..
+
+# 创建gitlab, 在windows下gitlab-data需要用volume方式，直接bind或报错：Error executing action `create` on resource 'storage_directory[/var/opt/gitlab/.ssh]'
+docker volume create gitlab-data
+docker volume create gitlab-log
+export GITLAB_HOME="${DOCKER_MOUNT_BASE_DIR}/gitlab"
+cd gitlab && docker-compose up -d && cd ..

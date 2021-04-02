@@ -1,0 +1,58 @@
+version: '3.1'
+services:
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - docker-bridge
+
+  dingtalk:
+    image: timonwong/prometheus-webhook-dingtalk:latest
+    volumes:
+      - ${PROMETHEUS_DINGTAKL_CONFIG_FILE:-./alertmanager/config.yml}:/etc/prometheus-webhook-dingtalk/config.yml:ro
+    ports:
+      - "8060:8060"
+    networks:
+      - docker-bridge
+
+  alertmanager:
+    depends_on:
+      - dingtalk
+    image: prom/alertmanager:latest
+    volumes:
+      - ${PROMETHEUS_ALERMANAGER_CONFIG_FILE:-./alertmanager/alertmanager.yml}:/etc/alertmanager/alertmanager.yml:ro
+    ports:
+      - "9093:9093"
+      - "9094:9094"
+    networks:
+      - docker-bridge
+
+  prometheus:
+    depends_on:
+      - alertmanager
+    image: prom/prometheus:latest
+    volumes:
+      - ${PROMETHEUS_CONFIG_FILE:-./prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml:ro
+      - ${PROMETHEUS_ALERT_RULES_FILE:-./prometheus/alert-rules.yml}:/etc/prometheus/alert-rules.yml:ro
+      - ${PROMETHEUS_DATA_VOLUME:-./prometheus/data}:/prometheus:rw
+    ports:
+      - "9090:9090"
+    networks:
+      - docker-bridge
+
+  grafana:
+    depends_on:
+      - prometheus
+    image: grafana/grafana:latest
+    volumes:
+      - ${PROMETHEUS_GRAFANA_VOLUME:-./grafana}:/var/lib/grafana:rw
+    ports:
+      - "3000:3000"
+    networks:
+      - docker-bridge
+
+# 事先创建好的 docker bridge 网络
+networks:
+  docker-bridge:
+    external: true

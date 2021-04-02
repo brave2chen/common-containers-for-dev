@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curl
+      version: latest
+  template:
+    metadata:
+      labels:
+        app: curl
+        version: latest
+    spec:
+      containers:
+        - image: radial/busyboxplus
+          imagePullPolicy: IfNotPresent
+          name: curl
+          resources: {}
+          stdin: true
+          tty: true
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

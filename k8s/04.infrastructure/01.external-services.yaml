@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: mysql
+spec:
+  hosts:
+    - mysql.local.com
+  ports:
+    - number: 3306
+      name: tcp
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: NONE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: redis
+spec:
+  hosts:
+    - redis.local.com
+  ports:
+    - number: 6379
+      name: tcp
+      protocol: TCP
+  location: MESH_EXTERNAL
+  resolution: NONE
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: es
+spec:
+  hosts:
+    - es.local.com
+  ports:
+    - number: 9200
+      name: http
+      protocol: HTTP
+  location: MESH_EXTERNAL
+  resolution: NONE

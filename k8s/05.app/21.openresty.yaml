@@ -1,0 +1,97 @@
+##################################################################################################
+# openresty service
+##################################################################################################
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: openresty
+  namespace: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openresty
+  namespace: default
+  labels:
+    app: openresty
+    service: openresty
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: openresty
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openresty
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openresty
+      version: 1.15.8.3-centos
+  template:
+    metadata:
+      labels:
+        app: openresty
+        version: 1.15.8.3-centos
+    spec:
+      serviceAccountName: openresty
+      containers:
+        - image: openresty/openresty:1.15.8.3-centos
+          imagePullPolicy: IfNotPresent
+          name: openresty
+          ports:
+            - containerPort: 80
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: conf
+            - mountPath: /app/lua
+              name: lua
+      volumes:
+        - name: conf
+          hostPath:
+            path: /c/dockerMount/openresty/conf
+            type: DirectoryOrCreate
+        - name: lua
+          hostPath:
+            path: /c/dockerMount/openresty/lua
+            type: DirectoryOrCreate
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: openresty-gateway
+  namespace: default
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 8080
+        name: http
+        protocol: HTTP
+      hosts:
+        - openresty.local.com
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: openresty
+  namespace: default
+spec:
+  hosts:
+    - openresty.local.com
+  gateways:
+    - openresty-gateway
+  http:
+    - route:
+        - destination:
+            host: openresty
