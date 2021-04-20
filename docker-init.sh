@@ -88,7 +88,7 @@ export ALLURE_DOCKER_SERVICE_PROJECTS_VOLUME="${DOCKER_MOUNT_BASE_DIR}/allure/pr
 cd allure && docker-compose up -d && cd ..
 
 # 创建 ubuntu ssh
-export UBUNTU_VERSION=18.04
+export UBUNTU_VERSION=20.04
 export UBUNTU_SOURCES_VOLUME="${DOCKER_MOUNT_BASE_DIR}/ubuntu/sources.list"
 export UBUNTU_ROOT_VOLUME="${DOCKER_MOUNT_BASE_DIR}/ubuntu/root"
 cd ubuntu && docker-compose up -d && cd ..

@@ -1,11 +1,12 @@
 version: '3.1'
 services: 
   ubuntu:
-    image: rastasheep/ubuntu-sshd:${UBUNTU_VERSION:-latest}
+    image: ubuntu:${UBUNTU_VERSION:-latest}
     container_name: ubuntu
     restart: always
     privileged: true
-    command: /sbin/init
+    tty: true
+    command: /bin/bash
     volumes:
       - ${UBUNTU_SOURCES_VOLUME:-./sources.list}:/etc/apt/sources.list:rw
       - ${UBUNTU_ROOT_VOLUME:-./root}:/root:rw
