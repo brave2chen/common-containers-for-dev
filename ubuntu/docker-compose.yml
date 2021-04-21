@@ -9,7 +9,7 @@ services:
     command: /bin/bash
     volumes:
       - ${UBUNTU_SOURCES_VOLUME:-./sources.list}:/etc/apt/sources.list:rw
-      - ${UBUNTU_ROOT_VOLUME:-./root}:/root:rw
+      - ${UBUNTU_DATA_VOLUME:-./data}:/data:rw
     ports:
       - ${UBUNTU_SSH_PORT:-22}:22
     networks:
