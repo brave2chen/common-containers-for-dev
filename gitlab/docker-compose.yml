@@ -6,12 +6,12 @@ services:
     hostname: 'gitlab.local.com'
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlab.local.com'
+        external_url 'https://gitlab.local.com:8443'
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
-      - '80:80'
-      - '443:443'
-      - '22:22'
+      - '8880:80'
+      - '8443:443'
+      - '8822:22'
     volumes:
       - '$GITLAB_HOME/config:/etc/gitlab'
       - 'gitlab-log:/var/log/gitlab'

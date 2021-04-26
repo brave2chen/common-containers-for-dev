@@ -4,7 +4,7 @@ DOCKER_MOUNT_BASE_DIR="/c/dockerMount"
 docker network create docker-bridge
 
 # 创建 mysql (包含了adminer、soar-web工具)
-export MYSQL_VERSION=8.0.22
+export MYSQL_VERSION=5.7
 export MYSQL_DATA_VOLUME="${DOCKER_MOUNT_BASE_DIR}/mysql/data"
 # mysql 8版本以上需要指定这个，如果非8版本，需要注释掉，还需要注释docker-compose.yml的改配置
 export MYSQL_FILES_VOLUME="${DOCKER_MOUNT_BASE_DIR}/mysql/mysql-files"
