@@ -60,6 +60,7 @@ spec:
   values:
     global:
       proxy:
+        logLevel: debug
         resources:
           requests:
             cpu: 10m
