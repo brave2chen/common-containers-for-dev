@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: mysql
+  namespace: default
 spec:
   hosts:
     - mysql.local.com
@@ -16,6 +17,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: redis
+  namespace: default
 spec:
   hosts:
     - redis.local.com
@@ -30,6 +32,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
   name: es
+  namespace: default
 spec:
   hosts:
     - es.local.com
